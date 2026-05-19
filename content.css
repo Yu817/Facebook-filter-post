@@ -1,0 +1,153 @@
+/* FB 社團篩選器 - Content Script 樣式 */
+
+/* 浮動按鈕容器 */
+#fb-filter-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99999;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 主浮動按鈕 */
+#fb-filter-floating-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #242526;
+    border: 2px solid #3A3B3C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #B0B3B8;
+    position: relative;
+}
+
+#fb-filter-floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
+}
+
+#fb-filter-floating-btn.active {
+    background: linear-gradient(135deg, #1877F2, #0D47A1);
+    border-color: #1877F2;
+    color: white;
+    box-shadow: 0 4px 20px rgba(24, 119, 242, 0.4);
+    animation: filterPulse 2s infinite;
+}
+
+@keyframes filterPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(24, 119, 242, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 28px rgba(24, 119, 242, 0.6);
+    }
+}
+
+#fb-filter-floating-btn.active:hover {
+    box-shadow: 0 6px 28px rgba(24, 119, 242, 0.5);
+}
+
+/* 徽章 */
+.fb-filter-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: #FA3E3E;
+    color: white;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    box-shadow: 0 2px 8px rgba(250, 62, 62, 0.4);
+}
+
+/* 面板 */
+#fb-filter-panel {
+    position: absolute;
+    bottom: 62px;
+    right: 0;
+    width: 280px;
+    background: #242526;
+    border: 1px solid #3A3B3C;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+#fb-filter-panel.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.fb-filter-panel-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #E4E6EB;
+    margin-bottom: 6px;
+}
+
+.fb-filter-panel-stats {
+    font-size: 13px;
+    color: #B0B3B8;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #3A3B3C;
+}
+
+.fb-filter-panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fb-filter-panel-btn {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #3A3B3C;
+    border-radius: 8px;
+    background: #3A3B3C;
+    color: #E4E6EB;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.fb-filter-panel-btn:hover {
+    background: #4A4B4C;
+    border-color: #555;
+}
+
+.fb-filter-panel-btn-primary {
+    background: linear-gradient(135deg, #1877F2, #0D47A1);
+    border-color: #1877F2;
+    color: white;
+}
+
+.fb-filter-panel-btn-primary:hover {
+    background: linear-gradient(135deg, #166FE5, #0B3D91);
+    box-shadow: 0 2px 12px rgba(24, 119, 242, 0.3);
+}

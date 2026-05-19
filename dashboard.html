@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB 社團篩選器 - 儀表板</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- 側邊裝飾 -->
+        <div class="bg-decoration">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
+        </div>
+
+        <!-- 頂部導航 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />
+                        </svg>
+                    </div>
+                    <span class="nav-title">FB 社團篩選器</span>
+                </div>
+                <div class="nav-actions">
+                    <div class="filter-status" id="filterStatus">
+                        <span class="status-dot"></span>
+                        <span class="status-text">動態過濾：關閉</span>
+                    </div>
+                    <button id="openAllBtn" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                        </svg>
+                        全部開啟
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要內容 -->
+        <main class="main-content">
+            <!-- Hero 區域 -->
+            <section class="hero">
+                <h1>你的社團，你做主</h1>
+                <p>新增你想關注的 Facebook 社團，一鍵按時間排序瀏覽</p>
+            </section>
+
+            <!-- 新增社團 -->
+            <section class="add-section">
+                <div class="add-card">
+                    <div class="add-card-inner">
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+                                <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+                            </svg>
+                            <input type="text" id="groupUrl"
+                                placeholder="貼上 Facebook 社團網址，例如：https://www.facebook.com/groups/example"
+                                autocomplete="off">
+                        </div>
+                        <button id="addBtn" class="btn btn-add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                            新增社團
+                        </button>
+                    </div>
+                    <div id="errorMsg" class="error-msg" style="display:none;"></div>
+                </div>
+            </section>
+
+            <!-- 設定區 -->
+            <section class="settings-section" style="margin-bottom: 32px;">
+                <div class="add-card" style="display: flex; flex-direction: column; gap: 16px;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                        ⚙️ 功能設定
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                        <!-- Webhook 設定 -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                                🔗 Discord Webhook 網址:
+                            </label>
+                            <div style="display: flex; gap: 8px; width: 100%;">
+                                <div class="input-wrapper" style="flex: 1; padding: 0 12px;">
+                                    <input type="password" id="webhookUrlInput" placeholder="貼上 https://discord.com/api/webhooks/..." style="padding: 10px 0;">
+                                </div>
+                                <button type="button" id="toggleWebhookVisibility" style="background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; height: 42px; width: 42px; font-size: 14px;">
+                                    👁️
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 關鍵字設定 -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">
+                                🔔 關鍵字提醒 (符合時加 @everyone，用 ; 分隔):
+                            </label>
+                            <div class="input-wrapper" style="padding: 0 12px;">
+                                <input type="text" id="alertKeywordsInput" placeholder="例如: 4070;14700" style="padding: 10px 0;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 統計列 -->
+            <section class="stats-bar" id="statsBar" style="display:none;">
+                <div class="stat-item">
+                    <span class="stat-number" id="groupCount">0</span>
+                    <span class="stat-label">追蹤社團</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label" id="lastAdded">—</span>
+                </div>
+            </section>
+
+            <!-- 社團卡片列表 -->
+            <section class="groups-grid" id="groupsGrid">
+                <!-- 空狀態 -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg>
+                    </div>
+                    <h2>開始追蹤你的社團</h2>
+                    <p>將 Facebook 社團網址貼到上方輸入框，即可加入追蹤清單</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
